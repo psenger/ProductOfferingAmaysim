@@ -26,8 +26,14 @@ build/Release
 # Dependency directory
 node_modules
 
+# dot env file added to the ignore list
+/.env
+
 # Optional npm cache directory
 .npm
 
 # Optional REPL history
 .node_repl_history
+
+# Idea files
+.idea
