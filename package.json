@@ -5,7 +5,6 @@
   "description": "Product Offering for Amaysim Technical Examine Written in NodeJS",
   "main": "index.js",
   "scripts": {
-    "preinstall": "node-gyp rebuild",
     "start": "node index.js",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha test/unit/*.js",
     "test:watch": "./node_modules/.bin/watch 'npm test' ./test/ "
@@ -25,7 +24,7 @@
   },
   "homepage": "https://github.com/psenger/product-offering-amaysim",
   "engines": {
-    "node": ">=4",
+    "node": ">=4.2",
     "npm": ">=3.0.0"
   },
   "dependencies": {
