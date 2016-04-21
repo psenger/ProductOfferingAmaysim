@@ -80,33 +80,20 @@ Options:
 
 ## Items to be address before release
 
-### X-rate / anti-ddos / spike-arrest  
-
-If this product is to be public facing, it will require a spike arrest.
-
-### SSL needs to be done
-
-SSL was never discussed as a requirement but should be considered. Usually, not always, REST services are by default are served with SSL. This is simply done so if there is confidential information in the payload it will not be compromised. 
-
-### We need an API-Key even on an open system.
-
-We need to track usage, and know who is using what system, we need a api-key.
-
-### Missing values for the terms and conditions
-
-The specification is missing values in the spread sheet.
-
-### Pagination
-
-Pagination is missing from the specification and should be called out.
-
-### Cross-origin resource sharing (CORS)
-
-There was no requirement for CORS, this means the application will only work in a http domain from whence it is deployed. I decided to turn it on.
-
-### Cache
-
-I suggest we build a LRU Map, or some strategy, this data looks like it changes very little. 
+* X-rate / anti-ddos / spike-arrest  
+    If this product is to be public facing, it will require a spike arrest.
+* SSL needs to be done
+    SSL was never discussed as a requirement but should be considered. Usually, not always, REST services are by default are served with SSL. This is simply done so if there is confidential information in the payload it will not be compromised. 
+* We need an API-Key even on an open system.
+    We need to track usage, and know who is using what system, we need a api-key.
+* Missing values for the terms and conditions
+    The specification is missing values in the spread sheet.
+* Pagination
+    Pagination is missing from the specification and should be called out.
+* Cross-origin resource sharing (CORS)
+    There was no requirement for CORS, this means the application will only work in a http domain from whence it is deployed. I decided to turn it on.
+* Cache
+    I suggest we build a LRU Map, or some strategy, this data looks like it changes very little. 
 
 ## Design Factors
 
