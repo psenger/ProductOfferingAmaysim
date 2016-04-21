@@ -1,5 +1,5 @@
 code,name,description,price,expiry,is_plan,is_unlimited,size_mb,4g,auto_renew,terms_url
-ult_small ,Unlimited 1GB,,24.90,30,true,true,1024,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-1gb.pdf
-ult_medium ,Unlimited 2GB,,29.90,30,true,true,2048,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-2gb.pdf
-ult_large ,Unlimited 5GB,,44.90,30,true,true,5120,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-5gb.pdf
+ult_small,Unlimited 1GB,,24.90,30,true,true,1024,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-1gb.pdf
+ult_medium,Unlimited 2GB,,29.90,30,true,true,2048,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-2gb.pdf
+ult_large,Unlimited 5GB,,44.90,30,true,true,5120,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-5gb.pdf
 ult_xlarge,Unlimited 8GB,,49.90,30,true,true,8192,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf

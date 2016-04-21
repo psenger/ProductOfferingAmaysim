@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Product Offerings"
+  },
+  "paths": {
+    "/products": {
+      "get": {
+        "description": "Amaysim have a number of different plans that they offer to customers. These are currently curated and managed across multiple different systems and data sources. We have identified that this is a prime candidate to be extracted into a centralised product catalogue micro-service. This service will expose product (plan) data out to multiple clients, internal and external. It should be accessed via an api over http.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Extract a specific product offering by it's id.\n",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ult_small",
+              "ult_medium",
+              "ult_large",
+              "ult_xlarge"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "ArrayOfProducts",
+              "type": "array",
+              "items": {
+                "title": "Product",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "expiry": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "is_plan": {
+                    "type": "boolean"
+                  },
+                  "is_unlimited": {
+                    "type": "boolean"
+                  },
+                  "size_mb": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "4g": {
+                    "type": "boolean"
+                  },
+                  "auto_renew": {
+                    "type": "boolean"
+                  },
+                  "terms_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsuccessful response",
+            "schema": {
+              "title": "Error",
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

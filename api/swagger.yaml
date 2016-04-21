@@ -1,0 +1,103 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Product Offerings
+host: aws.foo.com
+basePath: /api
+schemes:
+  - http
+paths:
+  /products/:
+    get:
+      description: >
+        Amaysim have a number of different plans that they offer to customers.
+        These are currently curated and managed across multiple different systems
+        and data sources. We have identified that this is a prime candidate to be
+        extracted into a centralised product catalogue micro-service. This
+        service will expose product (plan) data out to multiple clients, internal
+        and external. It should be accessed via an api over http.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            A successful response composed of an an array of one or more Products.
+          schema:
+            title: ArrayOfProducts
+            type: array
+            items:
+              $ref: "#/definitions/ProductV1"
+        '400':
+          description: Unsuccessful response
+          schema:
+            $ref: "#/definitions/Error"
+  /products/{id}:
+    get:
+      description: >
+        Amaysim have a number of different plans that they offer to customers.
+        These are currently curated and managed across multiple different systems
+        and data sources. We have identified that this is a prime candidate to be
+        extracted into a centralised product catalogue micro-service. This
+        service will expose product (plan) data out to multiple clients, internal
+        and external. It should be accessed via an api over http.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: |
+            Extract a specific product offering by it's unique id.
+          required: true
+          type: string
+          enum:
+            - ult_small
+            - ult_medium
+            - ult_large
+            - ult_xlarge
+      responses:
+        '200':
+          description: A successful response composed of an an array of one or more Products.
+          schema:
+            $ref: "#/definitions/ProductV1"
+        '400':
+          description: Unsuccessful response
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  ProductV1:
+    description: |
+      A full representation of a product for version 1.0.0
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        type: number
+        format: float
+      expiry:
+        type: integer
+        format: int32
+      is_plan:
+        type: boolean
+      is_unlimited:
+        type: boolean
+      size_mb:
+        type: integer
+        format: int32
+      4g:
+        type: boolean
+      auto_renew:
+        type: boolean
+      terms_url:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
