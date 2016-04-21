@@ -57,7 +57,26 @@ Class | Method | HTTP request | Description
  - [ProductOfferings.Link](docs/Link.md)
  - [ProductOfferings.ProductV1](docs/ProductV1.md)
 
+## Documentation for client
 
+The example client can pull down all the products, one, or a set per a version of the api. The usage is as follows;
+
+```script
+ $ ./scripts/get.js --help
+ 
+Usage:
+  get.js [OPTIONS] [ARGS]
+
+Options: 
+      --code STRING      The product code ( optional ).
+      --url STRING       The ( optional ) base url to the application, E.G. 
+                         http://localhost:3000/. May require quoting the 
+                         name contain spaces. default is 
+                         http://floating-brook-98056.herokuapp.com/products 
+      --version STRING   The semver of the api, default is latest ( optional ). 
+  -h, --help             Display help and usage details
+
+```
 
 ## Items to be address before release
 
