@@ -58,27 +58,28 @@ Class | Method | HTTP request | Description
  - [ProductOfferings.ProductV1](docs/ProductV1.md)
 
 
-## Documentation for Authorization
-
- All endpoints do not require authorization.
-
-
 
 ## Items to be address before release
 
-### X-rate anti-ddos 
+### X-rate / anti-ddos / spike-arrest  
 
-If this product is to be public facing, it will require a x-rate 
+If this product is to be public facing, it will require a spike arrest.
 
 ### SSL needs to be done
 
 SSL was never discussed as a requirement but should be considered. Usually, not always, REST services are by default are served with SSL. This is simply done so if there is confidential information in the payload it will not be compromised. 
 
-### do we need a API-Key or is this open?
+### We need an API-Key even on an open system.
+
+We need to track usage, and know who is using what system, we need a api-key.
 
 ### Missing values for the terms and conditions
 
-### pagination ?
+The specification is missing values in the spread sheet.
+
+### Pagination
+
+Pagination is missing from the specification and should be called out.
 
 ### Cross-origin resource sharing (CORS)
 
@@ -92,6 +93,24 @@ I suggest we build a LRU Map, or some strategy, this data looks like it changes 
 
 I decided to use Restify because Express is targeted at browser applications and contains functionality not needed, such as templating and rendering. Additionally, Restify has mechanisms in place to handle error rest clients.. reducing the amount of code I needed to create.
 
-# Running 
+# Running
 
-There are two environment variables that determine the configuration files hierarchy and user overrides. They are:
+There are two environment variables that must be set covered above. When this will be deployed we will use [supervisor](http://supervisord.org/) to keep it running.
+
+```script
+npm start
+```
+
+# Test
+
+Code coverage is located in `./coverage` directory. To run the full suite of unit tests and stop.
+
+```script
+npm test
+```
+
+To run the full suite of unit tests and wait for changes to re-run.
+
+```script
+npm run test:watch
+```

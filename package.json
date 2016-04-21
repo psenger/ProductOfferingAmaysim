@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha test/unit/*.js",
-    "test:watch": "./node_modules/.bin/watch 'npm test' ./test/ "
+    "test:watch": "./node_modules/.bin/watch 'npm test' ./test/ ",
+    "docs": "node ./node_modules/.bin/jsdoc2md ./lib/*.js > ./docs/api.md"
   },
   "repository": {
     "type": "git",
@@ -29,11 +30,12 @@
   },
   "dependencies": {
     "bluebird": "^3.3.5",
-    "bunyan": "^1.8.0",
+    "bunyan": "^1.8.1",
     "csv": "^0.4.6",
     "csv-parse": "^1.0.4",
     "dotenv": "^2.0.0",
     "lodash": "^4.11.1",
+    "morgan": "^1.7.0",
     "request": "^2.72.0",
     "restify": "^4.0.4",
     "twelve": "0.0.19"
