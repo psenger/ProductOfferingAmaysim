@@ -6,8 +6,9 @@
 
 var app = require('./package.json'),
     fs = require('fs'),
-    productsV1 = require('./lib/productsV1')( { csv: fs.readFileSync('./data/data-v1.0.0.csv'), pageSize: 10 } ),
-    restify = require('restify');
+    productsV1 = require('./lib/products-dao-1.0.0')( {  version: [ '1.0.0' ], csv: fs.readFileSync( './data/1.0.0.csv', 'utf8' )  } ),
+    restify = require('restify'),
+    config = require('./lib/config').getInstance();
 
 var server = restify.createServer({
     /**
@@ -15,16 +16,17 @@ var server = restify.createServer({
      key: fs.readFileSync('path/to/server/key'),
      */
     name: app.name,
-    version: app.version // default version for all routes, will translate to the last npm bumped version
+    version: app.version /** default version for all routes, will translate to the last npm bumped version **/
 });
 
+server.use(restify.CORS());
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
-server.get( { path:'/products',     version: [ '1.0.0' ] } , productsV1.query()  );
-server.get( { path:'/products/:id', version: [ '1.0.0' ] } , productsV1.detail() );
+server.get( { path:'/products',     version: productsV1.options.version } , productsV1.query()  );
+server.get( { path:'/products/:id', version: productsV1.options.version } , productsV1.detail() );
 
-server.listen(3000, function () {
+server.listen(config.get('api:port'), function () {
     console.log('%s listening at %s.', server.name, server.url);
 });
