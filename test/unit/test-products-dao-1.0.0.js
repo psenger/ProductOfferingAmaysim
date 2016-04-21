@@ -11,7 +11,8 @@ var describe   = require('mocha').describe,
     test       = require('unit.js'),
     should     = test.should,
     fs         = require('fs'),
-    path       = require('path');
+    path       = require('path'),
+    Promise    = require('bluebird');
 
 describe('products-dao-1.0.0', function () {
     describe('#option', function () {
@@ -59,7 +60,7 @@ describe('products-dao-1.0.0', function () {
                     headers: {
                         host : 'localhost:3000'
                     },
-                    url: '/products'
+                    url: '/api/products'
                 }, 
                 res = {
                     send: send
@@ -81,7 +82,7 @@ describe('products-dao-1.0.0', function () {
                     ( data[0].is ).should.containEql( { key: 'auto_renew', value: true } );
 
                     ( data[0].links ).should.containEql( { rel: 'terms_and_conditions',  href: 'https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf' } );
-                    ( data[0].links ).should.containEql( { rel: 'self',  href: 'http://localhost:3000/products/ult_xlarge' } );
+                    ( data[0].links ).should.containEql( { rel: 'self',  href: 'http://localhost:3000/api/products/ult_xlarge' } );
 
                     done();
                 };
@@ -102,7 +103,7 @@ describe('products-dao-1.0.0', function () {
                     headers: {
                         host : 'localhost:3000'
                     },
-                    url: '/products'
+                    url: '/api/products'
                 },
                 res = {
                     send: send
@@ -133,7 +134,7 @@ describe('products-dao-1.0.0', function () {
                     headers: {
                         host : 'localhost:3000'
                     },
-                    url: '/products'
+                    url: '/api/products'
                 },
                 res = {
                     send: send
@@ -141,7 +142,7 @@ describe('products-dao-1.0.0', function () {
                 next = function(){
                     nextCall = true;
                     should.exist( data );
-                    data.should.be.empty;
+                    (data).should.be.empty;
                     done();
                 };
             query(req,res,next);
@@ -151,8 +152,7 @@ describe('products-dao-1.0.0', function () {
             productsV1.options.csv = null;
             var options = {};
             options.csv = null;
-            var query = productsV1.query(options);
-            var nextCall = false;
+            var query = productsV1.query(options); 
             var data = null;
             var send = function send ( inData ) {
                 data = inData;
@@ -162,13 +162,12 @@ describe('products-dao-1.0.0', function () {
                     headers: {
                         host : 'localhost:3000'
                     },
-                    url: '/products'
+                    url: '/api/products'
                 },
                 res = {
                     send: send
                 },
                 next = function(){
-                    nextCall = true;
                     should.not.exist( data );
                 };
             try {
@@ -183,17 +182,110 @@ describe('products-dao-1.0.0', function () {
         });
     });
 
-    describe.skip('#detail()', function () {
+    describe('#detail()', function () {
         var productsV1 = require('../../lib/products-dao-1.0.0')( {  version: [ '1.0.0' ], csv: fs.readFileSync( path.join( __dirname, '..', '..','data', '1.0.0.csv' ), 'utf8' )  } );
         before(function (done) {
              done();
         });
-        it('should find 20 record', function (done) {
-            // Create a Key object to pass to Key.create()
-            Key.scan('id').beginsWith('test-').exec(function (err, keys) {
-                keys.length.should.eql(20);
-                done();
-            });
+        it('should find a record', function (done) {
+            var detail = productsV1.detail();
+            var options = {};
+            options.csv = 'code,name,description,price,expiry,is_plan,is_unlimited,size_mb,4g,auto_renew,terms_url\nult_xlarge,Unlimited 8GB,,49.90,30,true,true,8192,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf';
+            var data = null;
+            var send = function send ( inData ) {
+                data = inData;
+                should.exist( inData );
+            };
+            var req = {
+                    headers: {
+                        host : 'localhost:3000'
+                    },
+                    url: '/api/products/ult_xlarge',
+                    params:{
+                        id:'ult_xlarge'
+                    }
+                },
+                res = {
+                    send: send
+                },
+                next = function(e){
+
+                    should.not.exist( e );
+                    
+                    test.should(data.code).be.equal('ult_xlarge');
+                    test.should(data.name).be.equal('Unlimited 8GB');
+                    test.should(data.description).be.equal('');
+                    test.should(data.price).be.equal(49.9);
+                    test.should(data.expiry).be.equal(30);
+                    test.should(data.size_mb).be.equal(8192);
+
+                    ( data.is ).should.containEql( { key: 'plan', value: true } );
+                    ( data.is ).should.containEql( { key: 'unlimited', value: true } );
+                    ( data.is ).should.containEql( { key: '4g', value: true } );
+                    ( data.is ).should.containEql( { key: 'auto_renew', value: true } );
+
+                    ( data.links ).should.containEql( { rel: 'terms_and_conditions',  href: 'https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf' } );
+                    ( data.links ).should.containEql( { rel: 'self',  href: 'http://localhost:3000/api/products/ult_xlarge' } );
+                    done();
+                };
+            detail(req, res, next);
+        });
+        it('should throw an error because id is missing', function (done) {
+            var detail = productsV1.detail();
+            var options = {};
+            options.csv = 'code,name,description,price,expiry,is_plan,is_unlimited,size_mb,4g,auto_renew,terms_url\nult_xlarge,Unlimited 8GB,,49.90,30,true,true,8192,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf';
+            var data = null;
+            var send = function send ( inData ) {
+                data = inData;
+                should.exist( inData );
+            };
+            var req = {
+                    headers: {
+                        host : 'localhost:3000'
+                    },
+                    url: '/api/products/',
+                    params:{
+                    }
+                },
+                res = {
+                    send: send
+                },
+                next = function(e){
+                    should.exist( e );
+                    (e).should.be.an.Error;
+                    done();
+                };
+            detail(req, res, next);
+        });
+        it('should find a throw an error because the id is not found', function (done) {
+            var detail = productsV1.detail();
+            var options = {};
+            options.csv = 'code,name,description,price,expiry,is_plan,is_unlimited,size_mb,4g,auto_renew,terms_url\nult_xlarge,Unlimited 8GB,,49.90,30,true,true,8192,true,true,https://www.amaysim.com.au/dms/amaysim/documents/terms-conditions/special-conditions-and-service-description-unlimited-8gb.pdf';
+            var data = null;
+            var send = function send ( inData ) {
+                data = inData;
+                should.exist( inData );
+            };
+            var req = {
+                    headers: {
+                        host : 'localhost:3000'
+                    },
+                    url: '/api/products/monkey',
+                    params:{
+                        id: 'monkey'
+                    }
+                },
+                res = {
+                    send: send
+                },
+                next = function(e){
+                    should.exist( e );
+                    (e).should.be.an.Error;
+                    done();
+                };
+
+            detail(req, res, next);
+ 
         });
         after(function (done) {
             done();
