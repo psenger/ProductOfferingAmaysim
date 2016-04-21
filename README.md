@@ -1,4 +1,7 @@
 # Product Offering Amaysim
+
+[![Build Status](https://travis-ci.org/psenger/product-offering-amaysim.svg?branch=master)](https://travis-ci.org/psenger/product-offering-amaysim)
+
 Product Offering for Amaysim Technical Examine Written in NodeJS
 
 
@@ -15,4 +18,4 @@ Product Offering for Amaysim Technical Examine Written in NodeJS
 2. SSL needs to be done
 3. do we need a API-Key or is this open?
 4. Missing values for the terms and conditions
-5. 
+5. pagination ?
