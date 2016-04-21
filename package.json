@@ -1,6 +1,6 @@
 {
   "name": "product-offering-amaysim",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "description": "Product Offering for Amaysim Technical Examine Written in NodeJS",
   "main": "index.js",
